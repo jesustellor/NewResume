@@ -86,7 +86,7 @@ export default function Home() {
                 className={styles.resumeImage}
                 src="/resume.jpg"
                 alt="A picture of my resume showing my skills education and Work Experience."
-                width={400}
+                width={375}
                 height={110}
               />
             </section>

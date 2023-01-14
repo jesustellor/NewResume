@@ -23,7 +23,7 @@
 
 .resume {
   display: flex;
-  margin: auto;
+  margin-top: 5%;
   justify-content: center;
   border: 2px solid white;
 }
@@ -116,6 +116,12 @@ flex-direction: column;
     height: 99vh;
 }
 
+@media screen and (min-width:750px){
+  .resumeImage {
+    width: auto
+  }
+}
+
 @media only screen and (max-width: 750px){
   .navigation {
     display: flex;
@@ -123,6 +129,13 @@ flex-direction: column;
     margin-top: 35px;
     justify-content: center;
     height: 15vh;
+  }
+
+  .resume {
+    display: flex;
+    margin-top: 15%;
+    justify-content: center;
+    border: 2px solid white;
   }
 
   .projects {
