@@ -105,7 +105,7 @@ export default function Home() {
           {certificates && (
             <section className={styles.certificates}>
               <button className={styles.closeButton} onClick={closeWindow}>&times;</button>
-              <h1>Hii There again</h1>
+              <h1>Hii There again.. working...., for a list of current certificates please visit Linked in @ https://www.linkedin.com/in/jesus-tello/</h1>
             </section>
           )}
         </>
