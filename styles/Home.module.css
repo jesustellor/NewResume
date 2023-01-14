@@ -140,12 +140,12 @@ flex-direction: column;
 
   .iframePomodoroSite {
     height: 45vh;
-    width: 60vw;
+    width: 70vw;
   }
   
   .iframeCalculatorSite {
     height: 90vh;
-    width: 60vw;
+    width: 70vw;
   }
 
 }
