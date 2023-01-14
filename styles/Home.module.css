@@ -116,6 +116,22 @@ flex-direction: column;
     height: 99vh;
 }
 
+@media screen and (max-height:450px){
+  .iframePomodoroSite {
+    height: 99vh;
+    width: 40vw;
+  }
+
+  .iframeCalculatorSite {
+    height: 99vh;
+    width: 40vw;
+  }
+
+  .projects {
+    margin-top: 55vh;
+  }
+}
+
 @media screen and (min-width:750px){
   .resumeImage {
     width: auto
@@ -147,7 +163,7 @@ flex-direction: column;
     display: flex;
     flex-direction: column;
     height: auto;
-    margin: auto;
+    margin-top: 10%;
     /* border: 2px solid white; */
   }
 
