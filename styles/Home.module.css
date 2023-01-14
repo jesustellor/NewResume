@@ -1,27 +1,30 @@
 .main {
   text-align: center;
   display: flex;
-  flex-direction: column;
   flex-wrap: wrap;
+  justify-content: center;
   /*remove*/
   border: 2px solid white;
   height: 100vh;
+  overflow: auto;
 }
 .navigation {
   display: flex;
+  margin-top: 35px;
+  flex-direction: row;
   justify-content: center;
-  height: 20vh;
+  height: 10vh;
 }
+
 .body {
-  height: 79vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .resume {
   display: flex;
+  margin: auto;
   justify-content: center;
-  margin:15px;
-  height: 77vh;
-  /*remove*/
   border: 2px solid white;
 }
 .firstBox {
@@ -36,11 +39,12 @@
 
 }
 
-.heading { 
+.heading {
   margin: 20px;
 }
 
 .introParagraph {
+  
   padding: 2px;
   border: 2px solid white;
   border-radius: 2%;
@@ -48,7 +52,92 @@
   font-size: large;
 }
 
+.resumeImage {
+  position: relative;
+  right: 2.5vw;
+  height: 99vh;
+}
+
 .image {
+  margin-top: 80px;
+  display: flex;
+  align-self: center;
+
   border: 2px solid white;
   border-radius: 2%;
+}
+
+.closeButtonResume {
+  z-index: 1;
+  position: relative;
+  left: 2.5vw;
+  height: 5vh;
+  width: 5vw;
+}
+
+.projects {
+  display: flex;
+  flex-direction: column;
+  height: 99vh;
+  margin: auto;
+  border: 2px solid white;
+}
+
+.closeButtonProject {
+  position: relative;
+  top: 10px;
+  left: 10px;
+  height: 5vh;
+  width: 5vw;
+}
+
+.projectList {
+  display: flex;
+}
+
+.projectListItems {
+display: flex;
+flex-direction: column;
+}
+
+.iframePomodoroSite {
+  height: 45vh;
+  width: 44vw;
+}
+
+.iframeCalculatorSite {
+  height: 90vh;
+  width: 44vw;
+}
+
+.certificates {
+    /*remove*/
+    border: 2px solid white;
+    height: 99vh;
+}
+
+@media only screen and (max-width: 750px){
+  .projects {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    margin: auto;
+    border: 2px solid white;
+  }
+
+  .projectList {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .iframePomodoroSite {
+    height: 45vh;
+    width: 60vw;
+  }
+  
+  .iframeCalculatorSite {
+    height: 90vh;
+    width: 60vw;
+  }
+
 }
