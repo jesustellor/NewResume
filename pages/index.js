@@ -124,7 +124,7 @@ export default function Home() {
           learning and development process. I am available for hire to assist
           with any and all of your online development needs. Please take a
           moment to review my portfolio, projects and resume as linked above to
-          see my qualifications and past work.
+          see my qualifications and past work. <button>Contact Me</button>
         </p>
       </section>
     </section>
