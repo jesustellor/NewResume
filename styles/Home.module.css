@@ -157,6 +157,7 @@ flex-direction: column;
   }
 
   .iframePomodoroSite {
+    height: auto;
     width: 80vw;
   }
   
