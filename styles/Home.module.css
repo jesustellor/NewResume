@@ -130,6 +130,11 @@ flex-direction: column;
     justify-content: center;
     height: 15vh;
   }
+  .firstBox {
+    /*remove*/
+    border: 2px solid white;
+  
+  }
 
   .resume {
     display: flex;
