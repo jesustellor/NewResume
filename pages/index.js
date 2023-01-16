@@ -1,55 +1,63 @@
 import Head from "next/head";
 import Image from "next/image";
-import { Fascinate, Inter } from "@next/font/google";
+// import { Fascinate, Inter } from "@next/font/google";
 import styles from "../styles/Home.module.css";
-import { useState, useEffect } from "react";
-
+import { useState, useEffect, useRef } from "react";
+import emailjs from "@emailjs/browser";
 
 //className={Inter.className}
-const inter = Inter({ subsets: ["latin"] });
-
+// const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const [resume, setResume] = useState(false);
   const [projects, setProjects] = useState(false);
   const [certificates, setCertificates] = useState(false);
+  const [form, setForm] = useState(false);
+  const [send, setSend] = useState({
+    firstName: "",
+    email: "",
+    message: "",
+  });
 
+  const formRef = useRef(null);
 
 
   useEffect(() => {
     if (resume) {
       const resumeElement = document.querySelector(`.${styles.resume}`);
-      resumeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    } else if (projects){
+      resumeElement.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else if (projects) {
       const resumeElement = document.querySelector(`.${styles.projects}`);
-      resumeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    } else if (certificates){
+      resumeElement.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else if (certificates) {
       const resumeElement = document.querySelector(`.${styles.certificates}`);
-      resumeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      resumeElement.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [resume, projects, certificates]);
 
   let openUp = (event) => {
-    if(event.target.innerText === "View Resume"){
-      if(projects || certificates){
+    if (event.target.innerText === "View Resume") {
+      if (projects || certificates) {
         setCertificates(false);
         setProjects(false);
       }
       setResume(!resume);
-    } else if(event.target.innerText === "View Projects"){
-      if(resume || certificates){
+    } else if (event.target.innerText === "View Projects") {
+      if (resume || certificates) {
         setCertificates(false);
         setResume(false);
       }
       setProjects(!projects);
-    } else if(event.target.innerText === "View Certificates"){
-      if(resume || projects){
+    } else if (event.target.innerText === "View Certificates") {
+      if (resume || projects) {
         setProjects(false);
         setResume(false);
       }
       setCertificates(!certificates);
+    } else if (event.target.innerText === "Contact Me") {
+      setForm(!form);
     }
-    console.log(event.target.innerHTML)
+    console.log(event.target.innerHTML);
   };
 
   let closeWindow = () => {
@@ -58,8 +66,16 @@ export default function Home() {
     setCertificates(false);
   };
 
+  let sendInfo = (event) => {
+    event.preventDefault();
+    emailjs.sendForm("service_pz0l7gr", "template_ndxe9qi", formRef.current, "pgWoeuzfIJghJqqj7").then(function(response) {
+      console.log('SUCCESS!', response.status, response.text);
+   }, function(error) {
+      console.log('FAILED...', error);
+   });;
+  };
+
   return (
-    
     <section className={styles.main}>
       <Head>
         <title>Full Stack Developer</title>
@@ -81,7 +97,12 @@ export default function Home() {
         <>
           {resume && (
             <section className={styles.resume}>
-              <button className={styles.closeButtonResume} onClick={closeWindow}>X</button>
+              <button
+                className={styles.closeButtonResume}
+                onClick={closeWindow}
+              >
+                X
+              </button>
               <Image
                 className={styles.resumeImage}
                 src="/resume.jpg"
@@ -93,19 +114,44 @@ export default function Home() {
           )}
           {projects && (
             <section className={styles.projects}>
-              <button className={styles.closeButtonProject} onClick={closeWindow}>&times;</button>
+              <button
+                className={styles.closeButtonProject}
+                onClick={closeWindow}
+              >
+                &times;
+              </button>
               <section>
                 <ul className={styles.projectList}>
-                  <li className={styles.projectListItems}>Pomodoro:<iframe className={styles.iframePomodoroSite} src="https://pomodoro-jade-seven.vercel.app/" border="0"></iframe></li>
-                  <li className={styles.projectListItems}>Calculator:<iframe className={styles.iframeCalculatorSite} src="https://calculator-murex-psi.vercel.app/" border="0"></iframe></li>
+                  <li className={styles.projectListItems}>
+                    Pomodoro:
+                    <iframe
+                      className={styles.iframePomodoroSite}
+                      src="https://pomodoro-jade-seven.vercel.app/"
+                      border="0"
+                    ></iframe>
+                  </li>
+                  <li className={styles.projectListItems}>
+                    Calculator:
+                    <iframe
+                      className={styles.iframeCalculatorSite}
+                      src="https://calculator-murex-psi.vercel.app/"
+                      border="0"
+                    ></iframe>
+                  </li>
                 </ul>
               </section>
             </section>
           )}
           {certificates && (
             <section className={styles.certificates}>
-              <button className={styles.closeButton} onClick={closeWindow}>&times;</button>
-              <h1>Hii There again.. working...., for a list of current certificates please visit Linked in @ https://www.linkedin.com/in/jesus-tello/</h1>
+              <button className={styles.closeButton} onClick={closeWindow}>
+                &times;
+              </button>
+              <h1>
+                Hii There again.. working...., for a list of current
+                certificates please visit Linked in @
+                https://www.linkedin.com/in/jesus-tello/
+              </h1>
             </section>
           )}
         </>
@@ -124,8 +170,69 @@ export default function Home() {
           learning and development process. I am available for hire to assist
           with any and all of your online development needs. Please take a
           moment to review my portfolio, projects and resume as linked above to
-          see my qualifications and past work. <button>Contact Me</button>
+          see my qualifications and past work.{" "}
+          <button onClick={openUp}>Contact Me</button>
         </p>
+        <section>
+          {form && (
+            <form
+              ref={formRef}
+              action="mailto:jesustellor@gmail.com"
+              // method="post"
+              // action="contact-form-process.php"
+            >
+              <div>
+                <label for="from_name">First Name</label>
+                <div>
+                  <input
+                    type="text"
+                    id="from_name"
+                    name="from_name"
+                    onChange={(event) =>
+                      setSend({ ...send, name: event.target.value })
+                    }
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label for="reply_to">Your email address</label>
+                <div>
+                  <input
+                    type="email"
+                    id="reply_to"
+                    name="reply_to"
+                    onChange={(event) =>
+                      setSend({ ...send, email: event.target.value })
+                    }
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label for="message">Your message</label>
+                <div>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="6"
+                    maxlength="3000"
+                    onChange={(event) =>
+                      setSend({ ...send, message: event.target.value })
+                    }
+                    required
+                  ></textarea>
+                </div>
+              </div>
+
+              <div>
+                <button onClick={sendInfo} type="submit">Send Message</button>
+              </div>
+            </form>
+          )}
+        </section>
       </section>
     </section>
   );
