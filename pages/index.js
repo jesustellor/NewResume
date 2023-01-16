@@ -14,26 +14,28 @@ export default function Home() {
   const [certificates, setCertificates] = useState(false);
   const [form, setForm] = useState(false);
   const [send, setSend] = useState({
-    firstName: undefined,
-    email: undefined,
-    message: undefined,
+    firstName: "",
+    email: "",
+    message: "",
   });
 
   const formRef = useRef(null);
-
 
   useEffect(() => {
     if (resume) {
       const resumeElement = document.querySelector(`.${styles.resume}`);
       resumeElement.scrollIntoView({ behavior: "smooth", block: "start" });
     } else if (projects) {
-      const resumeElement = document.querySelector(`.${styles.projects}`);
-      resumeElement.scrollIntoView({ behavior: "smooth", block: "start" });
+      const projectElement = document.querySelector(`.${styles.projects}`);
+      projectElement.scrollIntoView({ behavior: "smooth", block: "start" });
     } else if (certificates) {
-      const resumeElement = document.querySelector(`.${styles.certificates}`);
-      resumeElement.scrollIntoView({ behavior: "smooth", block: "start" });
+      const certificates = document.querySelector(`.${styles.certificates}`);
+      certificates.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else if (form) {
+      const formElement = document.querySelector(`.${styles.formStyle}`);
+      formElement.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-  }, [resume, projects, certificates]);
+  }, [resume, projects, certificates, form]);
 
   let openUp = (event) => {
     if (event.target.innerText === "View Resume") {
@@ -56,6 +58,7 @@ export default function Home() {
       setCertificates(!certificates);
     } else if (event.target.innerText === "Contact Me") {
       setForm(!form);
+      setSend({ ...send, firstName: "", email: "", message: "" });
     }
     console.log(event.target.innerHTML);
   };
@@ -68,13 +71,15 @@ export default function Home() {
 
   let sendInfo = (event) => {
     event.preventDefault();
-    emailjs.sendForm("service_pz0l7gr", "template_ndxe9qi", formRef.current, "pgWoeuzfIJghJqqj7")
-    .then(function(response) {
-      console.log('SUCCESS!', response.status, response.text);
-   }, function(error) {
-      console.log('FAILED...', error);
-   });;
-   setSend({...send, firstName: '', email: '', message: ''})
+      emailjs.sendForm("service_pz0l7gr", "template_ndxe9qi", formRef.current, "pgWoeuzfIJghJqqj7")
+      .then(function(response) {
+        console.log('SUCCESS!', response.status, response.text);
+     }, function(error) {
+        console.log('FAILED...', error);
+     });
+
+    setSend({ ...send, firstName: "", email: "", message: "" });
+    setForm(false);
   };
 
   return (
@@ -178,6 +183,7 @@ export default function Home() {
         <section>
           {form && (
             <form
+              className={styles.formStyle}
               ref={formRef}
               method="post"
               onSubmit={sendInfo}
@@ -193,6 +199,7 @@ export default function Home() {
                       setSend({ ...send, firstName: event.target.value })
                     }
                     value={send.firstName}
+                    placeholder="Your First Name"
                     required
                   />
                 </div>
@@ -209,6 +216,7 @@ export default function Home() {
                     onChange={(event) =>
                       setSend({ ...send, email: event.target.value })
                     }
+                    placeholder="your-email@provider.com"
                     required
                   />
                 </div>
@@ -226,6 +234,7 @@ export default function Home() {
                     onChange={(event) =>
                       setSend({ ...send, message: event.target.value })
                     }
+                    placeholder="What may i help you with?"
                     required
                   ></textarea>
                 </div>
