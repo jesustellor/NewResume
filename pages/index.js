@@ -14,9 +14,9 @@ export default function Home() {
   const [certificates, setCertificates] = useState(false);
   const [form, setForm] = useState(false);
   const [send, setSend] = useState({
-    firstName: "",
-    email: "",
-    message: "",
+    firstName: undefined,
+    email: undefined,
+    message: undefined,
   });
 
   const formRef = useRef(null);
@@ -68,11 +68,13 @@ export default function Home() {
 
   let sendInfo = (event) => {
     event.preventDefault();
-    emailjs.sendForm("service_pz0l7gr", "template_ndxe9qi", formRef.current, "pgWoeuzfIJghJqqj7").then(function(response) {
+    emailjs.sendForm("service_pz0l7gr", "template_ndxe9qi", formRef.current, "pgWoeuzfIJghJqqj7")
+    .then(function(response) {
       console.log('SUCCESS!', response.status, response.text);
    }, function(error) {
       console.log('FAILED...', error);
    });;
+   setSend({...send, firstName: '', email: '', message: ''})
   };
 
   return (
@@ -177,32 +179,33 @@ export default function Home() {
           {form && (
             <form
               ref={formRef}
-              action="mailto:jesustellor@gmail.com"
-              // method="post"
-              // action="contact-form-process.php"
+              method="post"
+              onSubmit={sendInfo}
             >
               <div>
-                <label for="from_name">First Name</label>
+                <label htmlFor="from_name">First Name</label>
                 <div>
                   <input
                     type="text"
                     id="from_name"
                     name="from_name"
                     onChange={(event) =>
-                      setSend({ ...send, name: event.target.value })
+                      setSend({ ...send, firstName: event.target.value })
                     }
+                    value={send.firstName}
                     required
                   />
                 </div>
               </div>
 
               <div>
-                <label for="reply_to">Your email address</label>
+                <label htmlFor="reply_to">Your email address</label>
                 <div>
                   <input
                     type="email"
                     id="reply_to"
                     name="reply_to"
+                    value={send.email}
                     onChange={(event) =>
                       setSend({ ...send, email: event.target.value })
                     }
@@ -212,13 +215,14 @@ export default function Home() {
               </div>
 
               <div>
-                <label for="message">Your message</label>
+                <label htmlFor="message">Your message</label>
                 <div>
                   <textarea
                     id="message"
                     name="message"
                     rows="6"
-                    maxlength="3000"
+                    maxLength="3000"
+                    value={send.message}
                     onChange={(event) =>
                       setSend({ ...send, message: event.target.value })
                     }
@@ -228,7 +232,7 @@ export default function Home() {
               </div>
 
               <div>
-                <button onClick={sendInfo} type="submit">Send Message</button>
+                <button type="submit">Send Message</button>
               </div>
             </form>
           )}
